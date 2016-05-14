@@ -282,9 +282,9 @@ namespace ControlSystemsProjectSFG
                 for (int i = 1; i < ld.Size; i++)
                 {
                     string temp = "";
-                    int count = 0;
                     foreach (List<List<Node>> lln in ld.getNonTouching(i))
                     {
+                        int count = 0;
                         bool flag = true;
 
                         foreach (List<Node> loop in lln)
@@ -303,8 +303,15 @@ namespace ControlSystemsProjectSFG
                                 count++;
                             }
                         }
-                        if(count == i)
+                        if (count == i)
+                        {
                             tf += temp;
+                            temp = "";
+                        }
+                        else
+                        {
+                            temp = "";
+                        }
                     }
                     //tf = tf.Substring(0, tf.Length - 3);
                     tf += " ) ";
@@ -314,7 +321,7 @@ namespace ControlSystemsProjectSFG
             if (tf.EndsWith(" + "));
                 tf = tf.Substring(0, tf.Length - 2);
             tf += "\n";
-            tf += "______________________________\n";
+            tf += "_______________________________________________________________________\n";
             tf += " ( ";
             tf += CalculateDelta(ld, paths);
             tf += " ) ";
