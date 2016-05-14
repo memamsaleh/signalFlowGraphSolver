@@ -17,13 +17,13 @@ namespace ControlSystemsProjectSFG
         List<Path> paths;
         Node selectedN = null;
         Path selectedP = null;
-        enum state { DrawNode, DrawEdge, Edit, Clear, Neutral };
+        enum state { DrawNode, DrawEdge, Edit, Start, End, Neutral };
         state s = state.Neutral;
         Graphics g;
         int nid = 1;
         int pid = 1;
         Node start = null, end = null;
-        Point sp;
+        Node sPrevious;
         bool chosen = false;
         Node temp;
         GraphHelper gh = new GraphHelper();
@@ -51,7 +51,13 @@ namespace ControlSystemsProjectSFG
             switch (s)
             {
                 case state.DrawNode:
-                    nodes.Add(new Node(new Point(e.X, e.Y), nid++));
+                    Point cent = new Point(e.X, e.Y);
+                    bool drawn = false;
+                    foreach(Node n in nodes)
+                        if (n.Contains(cent))
+                            drawn = true;
+                    if(!drawn)
+                        nodes.Add(new Node(cent, nid++));
                     s = state.Neutral;
                     break;
                 case state.Neutral:
@@ -84,19 +90,69 @@ namespace ControlSystemsProjectSFG
 
                     if (!chosen && selectedN != null)
                     {
-                        sp = new Point(selectedN.Center.X, selectedN.Center.Y);
+                        sPrevious = selectedN;
                         chosen = true;
                         temp = selectedN;
                     }
                     else if(selectedN != null)
                     {
-                        paths.Add(new Path(sp, new Point(selectedN.Center.X, selectedN.Center.Y), pid));
-                        chosen = false;
-                        pid++;
-                        temp.addOut(selectedN);
-                        selectedN.addIn(temp);
+                        drawn = false;
+                        foreach(Path p in paths)
+                            if (p.Start == sPrevious && p.End == selectedN)
+                                drawn = true;
+                        if (!drawn)
+                        {
+                            paths.Add(new Path(sPrevious, selectedN, pid));
+                            chosen = false;
+                            pid++;
+                            temp.addOut(selectedN);
+                            selectedN.addIn(temp);
+                        }
                     }
                     break;
+                case state.Start:
+                    if (selectedN != null)
+                        selectedN.Color = Brushes.Blue;
+
+                    foreach (Node n in nodes)
+                    {
+                        if (n.Contains(new Point(e.X, e.Y)))
+                        {
+                            n.Color = Brushes.DarkGray;
+                            selectedN = n;
+                        }
+                    }
+
+                    if (selectedN != null && selectedN.Ins.Count == 0)
+                    {
+                        selectedN.Color = Brushes.Green;
+                        start = selectedN;
+                        selectedN = null;
+                    }
+
+                    break;
+                case state.End:
+                    if (selectedN != null)
+                        selectedN.Color = Brushes.Blue;
+
+                    foreach (Node n in nodes)
+                    {
+                        if (n.Contains(new Point(e.X, e.Y)))
+                        {
+                            n.Color = Brushes.DarkGray;
+                            selectedN = n;
+                        }
+                    }
+
+                    if (selectedN != null && selectedN.Outs.Count == 0)
+                    {
+                        selectedN.Color = Brushes.Red;
+                        end = selectedN;
+                        selectedN = null;
+                    }
+
+                    break;
+
             }
             Refresh();
         }
@@ -113,6 +169,11 @@ namespace ControlSystemsProjectSFG
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
+            for (int i = paths.Count - 1; i >= 0; i--)
+            {
+                if (paths[i].Start == selectedN || paths[i].End == selectedN)
+                    paths.RemoveAt(i);
+            }
             nodes.Remove(selectedN);
             //nid--;
             Refresh();
@@ -125,28 +186,22 @@ namespace ControlSystemsProjectSFG
 
         private void ClearBtn_Click(object sender, EventArgs e)
         {
-            s = state.Clear;
+            nodes.Clear();
+            paths.Clear();
+            nid = 1;
+            pid = 1;
+            Refresh();
             s = state.Neutral;
         }
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
-            if(selectedN != null && selectedN.Ins.Count == 0)
-            {
-                selectedN.Color = Brushes.Green;
-                start = selectedN;
-                selectedN = null;
-            }
+            s = state.Start;
         }
 
         private void EndBtn_Click(object sender, EventArgs e)
         {
-            if (selectedN != null && selectedN.Outs.Count == 0)
-            {
-                selectedN.Color = Brushes.Red;
-                end = selectedN;
-                selectedN = null;
-            }
+            s = state.End;
         }
 
         private void SolveBtn_Click(object sender, EventArgs e)

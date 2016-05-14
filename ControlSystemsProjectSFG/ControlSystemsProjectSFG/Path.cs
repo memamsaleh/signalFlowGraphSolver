@@ -11,18 +11,18 @@ namespace ControlSystemsProjectSFG
 {
     class Path
     {
-        Point start;
-        Point end;
+        Node start;
+        Node end;
         string name = "";
         int id;
 
-        public Point Start
+        public Node Start
         {
             get { return start; }
             set { start = value; }
         }
 
-        public Point End
+        public Node End
         {
             get { return end; }
             set { end = value; }
@@ -34,7 +34,7 @@ namespace ControlSystemsProjectSFG
             set { name = value; }
         }
 
-        public Path(Point st, Point ep, int id)
+        public Path(Node st, Node ep, int id)
         {
             this.start = st;
             this.end = ep;
@@ -44,24 +44,24 @@ namespace ControlSystemsProjectSFG
 
         public void Draw(Graphics g)
         {
-            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
-            Pen pen = new Pen(Color.Blue, 1);
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(10, 10);
+            Pen pen = new Pen(Color.Blue, 2);
             //pen.StartCap = LineCap.RoundAnchor;
             pen.CustomEndCap = bigArrow;
-            if (end.X > start.X)
+            if (end.Center.X > start.Center.X)
             {
-                g.DrawLine(pen, start, end);
-                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.X + end.X) / 2), ((start.Y + end.Y) / 2) + 10));
+                g.DrawLine(pen, start.Center, end.Center);
+                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.Center.X + end.Center.X) / 2), ((start.Center.Y + end.Center.Y) / 2) + 10));
             }
-            else if (end.X < start.X)
+            else if (end.Center.X < start.Center.X)
             {
-                g.DrawBezier(pen, start, new Point(start.X, start.Y - 100), new Point(end.X, end.Y - 100), end);
-                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.X + end.X) / 2), ((start.Y + end.Y) / 2) - 70));
+                g.DrawBezier(pen, start.Center, new Point(start.Center.X, start.Center.Y - 100), new Point(end.Center.X, end.Center.Y - 100), end.Center);
+                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.Center.X + end.Center.X) / 2), ((start.Center.Y + end.Center.Y) / 2) - 70));
             }
             else
             {
-                g.DrawEllipse(pen, start.X, start.Y, -10, -10);
-                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.X + end.X) / 2), ((start.Y + end.Y) / 2) - 12));
+                g.DrawEllipse(pen, start.Center.X + 30, start.Center.Y, -30, -30);
+                g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(((start.Center.X + end.Center.X) / 2), ((start.Center.Y + end.Center.Y) / 2) - 50));
             }
         }
     }

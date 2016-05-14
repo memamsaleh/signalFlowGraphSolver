@@ -1,0 +1,9 @@
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\bin\Debug\ControlSystemsProjectSFG.exe.config
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\bin\Debug\ControlSystemsProjectSFG.exe
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\bin\Debug\ControlSystemsProjectSFG.pdb
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.csprojResolveAssemblyReference.cache
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.Form1.resources
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.Properties.Resources.resources
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.csproj.GenerateResource.Cache
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.exe
+E:\Programming\Software\C#\ControlSystemsProjectSFG\ControlSystemsProjectSFG\obj\Debug\ControlSystemsProjectSFG.pdb

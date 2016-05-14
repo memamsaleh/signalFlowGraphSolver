@@ -72,14 +72,14 @@ namespace ControlSystemsProjectSFG
 
         public void Draw(Graphics g)
         {
-            g.FillEllipse(brush, Position.X, Position.Y, 10, 10);
-            g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(Position.X, Position.Y + 12));
+            g.FillEllipse(brush, Position.X, Position.Y, 30, 30);
+            g.DrawString(name, new Font(new FontFamily("Arial"), 12), Brushes.Black, new PointF(Position.X, Position.Y + 32));
         }
 
         public bool Contains(Point p)
         {
             double distance = Math.Sqrt(Math.Pow(p.X - center.X, 2) + Math.Pow(p.Y - center.Y, 2));
-            return distance < 5;
+            return distance < 23;
         }
 
         public void addIn(Node n)

@@ -106,7 +106,7 @@ namespace ControlSystemsProjectSFG
                 {
                     if (i + 1 >= nodes.Count)
                         break;
-                    if (p.Start == nodes[i].Center && p.End == nodes[i + 1].Center)
+                    if (p.Start.Center == nodes[i].Center && p.End.Center == nodes[i + 1].Center)
                         path.Add(p);
                 }
             }
@@ -265,7 +265,8 @@ namespace ControlSystemsProjectSFG
                     }
                     delta += " + ";
                 }
-                delta = delta.Substring(0, delta.Length - 3);
+                if (delta.EndsWith(" + "));
+                    delta = delta.Substring(0, delta.Length - 3);
                 delta += " ) ";
             }
             return delta;
@@ -310,6 +311,8 @@ namespace ControlSystemsProjectSFG
                 }
                 tf += " + ";
             }
+            if (tf.EndsWith(" + "));
+                tf = tf.Substring(0, tf.Length - 2);
             tf += "\n";
             tf += "______________________________\n";
             tf += " ( ";
